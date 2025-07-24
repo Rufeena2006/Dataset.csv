@@ -1,0 +1,28 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# === 1. Load Dataset ===
+# Replace with your dataset file name
+file_path = "customer_dataset.csv"
+df = pd.read_csv(file_path)
+
+# === 2. Explore Dataset ===
+print("First 5 rows:\n", df.head())
+print("\nDataset Info:")
+print(df.info())
+print("\nSummary Statistics:\n", df.describe(include='all'))
+
+# === 3. Data Cleaning ===
+# Convert dates to datetime
+df['Signup_Date'] = pd.to_datetime(df['Signup_Date'], errors='coerce')
+df['Last_Login'] = pd.to_datetime(df['Last_Login'], errors='coerce')
+
+# Handle missing values (example: fill numeric with median, categorical with mode)
+df['Age'].fillna(df['Age'].median(), inplace=True)
+df['Annual_Income'].fillna(df['Annual_Income'].median(), inplace=True)
+df['Gender'].fillna(df['Gender'].mode()[0], inplace=True)
+df['City'].fillna("Unknown", inplace=True)
+df['Account_Status'].fillna("Inactive", inplace=True)
+df['Loyalty_Score'].fillna(df['Loyalty_Score'].median(), inplace=True)
+df['Feedback'].fillna("No feedback", inplace=True)
